@@ -1,0 +1,13 @@
+<h1>Search</h1>
+<form>  
+  <%= select_tag 'search[project_id]', options_from_collection_for_select(@projects, :id, :name, @search_project_id ) %>
+  <%= text_field_tag 'search[term]', @search_term %>
+</form>
+<% @tickets.each do |ticket| %>
+  <li>
+    <%= link_to "#{ticket.number} - #{ticket.title}", project_ticket_url(ticket.prefix_options[:project_id],ticket.id) %>
+    <br />
+    Created By:<%= ticket.latest_body %> 
+    <%= ticket.inspect %>
+  </li>
+<% end %>

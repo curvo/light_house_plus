@@ -1,0 +1,6 @@
+<%= link_to "Search", search_path %> << <%= link_to "#{@user.name}", project_path(@project) %> << <%= @ticket.number %> <%= @ticket.title %><br /><br />
+
+<%= text_area_tag 'ticket', @ticket.inspect, :size => '80x10' %>
+<br />
+<br />
+<%= text_area_tag 'ticket_versions', @ticket.versions.inspect, :size => '80x20' %>

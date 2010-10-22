@@ -1,0 +1,17 @@
+.DS_Store
+.bundle
+.idea
+.loadpath
+.project
+.tmtags
+config/database.yml
+config/api_keys.yml
+log
+pitc.tmproj
+public/system
+rails_upgrade
+scratch_directory/
+tmp
+vendor/plugins/rails_indexes
+data_import
+2010-*

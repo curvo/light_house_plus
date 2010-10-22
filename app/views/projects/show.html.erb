@@ -1,0 +1,12 @@
+<%= link_to "Search", search_path %> << <%= link_to "#{@project.name}", project_path(@project) %>
+<br />
+<br />
+<%= text_area_tag 'project', @project.inspect, :size => '80x20' %>
+
+<h2>Memberships</h2>
+<% @memberships.each do |member| %>
+  <img src="<%= 'https://westedinteractive.lighthouseapp.com/' + member.user.avatar_url %>"><%= link_to member.user.name, user_path(member.user.id) %>
+  <br />
+  <%= text_area_tag "member_#{member.id}", member.inspect, :size => '80x10' %>
+  <br />
+<% end %>
