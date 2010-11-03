@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
+  map.root :controller => :home, :action => 'redirect'
   map.resources :projects, :has_many => [ :tickets ]
   map.resources :lighthouse_projects
   map.search 'search', :controller => :search, :action => 'index'

@@ -1,6 +1,22 @@
-<%= link_to "Search", search_path %> << <%= link_to "#{@project.name}", project_path(@project) %> << <%= @ticket.number %> <%= @ticket.title %><br /><br />
+<%= link_to "Search", search_path %> < <%= link_to "#{@project.name}", project_path(@project) %> < <%= @ticket.number %> <%= @ticket.title %><br /><br />
 
-<%= text_area_tag 'ticket', @ticket.inspect, :size => '80x10' %>
+<h2>VARS</h2>
+<table>
+  <%= @vars.map { |param, value| "<tr><td>" + param.to_s + "</td><td>" + value.to_s + "</td></tr>" } %>
+</table>
+
+<h2>Ticket</h2>
+
+<table>
+  <%= @ticket.attributes.map { |param, value| "<tr><td>" + param.to_s + "</td><td>" + value.to_s + "</td></tr>" } %>
+</table>
+
 <br />
 <br />
-<%= text_area_tag 'ticket_versions', @ticket.versions.inspect, :size => '80x20' %>
+<h2>Ticket Verisons</h2>
+<% @ticket.versions.reverse.each do |version| %>
+<h3>Version: <%= version.updated_at %></h3>
+<table>
+  <%= version.attributes.map { |param, value| "<tr><td>" + param.to_s + "</td><td>" + value.to_s + "</td></tr>" } %>
+</table>
+<% end %>

@@ -5,6 +5,6 @@ class SearchController < ApplicationController
       @search_project_id= params[:search][:project_id].to_i
     end
     @tickets = @search_term ? Ticket.search(@search_project_id,@search_term) : []
-    @projects = Project.all
+    @projects = Project.all()
   end
 end
