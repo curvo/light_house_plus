@@ -10,10 +10,11 @@
 <h2>@bins</h2>
 <table>
   <tr>
-  <%= @bins.first.attributes.map { |param, value| "<th>" + param.to_s + "</th>" } %>
+  <%= @project.bins.first.attributes.map { |param, value| "<th>" + param.to_s + "</th>" } %>
   </tr>
-<% @bins.each do |bin| %>
-<tr><%= bin.attributes.map { |param, value| "<td>" + value.to_s + "</td>" } %></tr>
+  <% shared_bins = @project.bins.reject {|bin| bin.shared == false } %>
+<% shared_bins.each do |bin| %>
+  <tr><%= bin.attributes.map { |param, value| "<td>" + value.to_s + "</td>" } %></tr>
 <% end %>
 </table>
 
@@ -21,9 +22,9 @@
 <table>
   <tr>
     <th colspan="2">Member</th>
-    <%= @memberships.first.user.attributes.map { |param, value| "<th>" + param.to_s + "</th>" } %>
+    <%= @project.memberships.first.user.attributes.map { |param, value| "<th>" + param.to_s + "</th>" } %>
   </tr>
-<% @memberships.each do |member| %>
+<% @project.memberships.each do |member| %>
   <tr valign="bottom">
     <td><img src="<%= 'https://westedinteractive.lighthouseapp.com/' + member.user.avatar_url %>" height="40px" ></td>
     <td><%= link_to member.user.name, user_path(member.user.id) %></td>

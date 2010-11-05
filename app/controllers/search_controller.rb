@@ -3,6 +3,7 @@ class SearchController < ApplicationController
     if params[:search]
       @search_term = params[:search][:term].to_s
       @search_project_id= params[:search][:project_id].to_i
+      @search_project = Lighthouse::Project.find(@search_project_id)      
     end
     @tickets = @search_term ? Ticket.search(@search_project_id,@search_term) : []
     @projects = Project.all()

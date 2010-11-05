@@ -6,9 +6,6 @@ class ProjectsController < ApplicationController
       Project.restore_defaults(params[:id])
     end
     @project = Lighthouse::Project.find(params[:id])
-    @memberships = @project.memberships
-    @bins = @project.bins
-    # ProjectMembership.all({ :project_id => params[:id] })
   end
 
 end

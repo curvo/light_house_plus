@@ -6,29 +6,25 @@ class TicketsController < ApplicationController
     @ticket_versions = @ticket.versions
     @vars = {}
     @ticket_versions.each do |version|
-      version.body_html.to_s.scan(/\{(\S*)\s*:\s*(.*)\}/) { |parameter, value| 
-        minutes = ""
+      version.body_html.to_s.scan(/\{(\S*)\s*:\s*([0-9.]+\s*\w*)\}/) { |parameter, value| 
+        hours = ""
         warn = "warn message.. "
         warn = warn + " original value:[" + value.to_s + "]"
         value.to_s.scan(/^([0-9.]+)\s*(\w.*?)\s*$/) {|number, unit| 
           warn = warn + " number:[" + number + "] unit:[" + unit + "]"
           if ( unit == "days" || unit == "day" || unit == "d" )
-            number = number.to_f * 8 * 60
-            unit = "minutes"
+            number = number.to_f * 8
+            unit = "hours"
           end
-          if ( unit == "hours" || unit == "hour" || unit == "h" )
-            number = number.to_f * 60
-            unit = "minutes"
+          if ( unit == "minutes" || unit == "minute" || unit == "m" )
+            number = number.to_f / 60
+            unit = "hours"
           end
-          if number.to_i > 0 
-            minutes = number.to_s
-          end
-          warn = warn + " minutes:[" + minutes + "]"          
+          hours = number.to_s
+          warn = warn + " hours:[" + hours + "]"          
         }
         # raise warn.inspect
-        if minutes.to_i > 0 
-          @vars[parameter] = minutes
-        end
+        @vars[parameter] = hours
           
           
       }
