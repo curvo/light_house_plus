@@ -4,13 +4,19 @@
   <%= text_field_tag 'search[term]', @search_term %>
 </form>
 <% if @search_project %>
-<h2>Results for <%= link_to "#{@search_project.name}", project_path(@search_project) %></h2>
-<% end %>
-<% @tickets.each do |ticket| %>
-  <li>
-    <%= link_to "#{ticket.number} - #{ticket.title}",     project_ticket_url(ticket.prefix_options[:project_id],ticket.id) %>
-    <br />
-    Created By:<%= ticket.latest_body %> 
-    <%= ticket.inspect %>
-  </li>
+  <h2>Results for <%= link_to "#{@search_project.name}", project_path(@search_project) %></h2>
+  <% @tickets.each do |ticket| %>
+    <h3><%= link_to "#{ticket.number} - #{ticket.title}", project_ticket_url(@search_project_id,ticket.id) %></h3>
+    <h4>Params: </h4>
+    <table>
+      <%= ticket.params.map { |param, value| "<tr><td>" + param.to_s + "</td><td>" + value.to_s + "</td></tr>" } %>
+            </table>
+      <br />
+      <h4>Ticket Details: </h4>
+      
+      <table>
+        <%= ticket.attributes.map { |param, value| "<tr><td>" + param.to_s + "</td><td>" + value.to_s + "</td></tr>" } %>
+      </table>    
+    </li>
+  <% end %>
 <% end %>

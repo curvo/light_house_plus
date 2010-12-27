@@ -1,15 +1,22 @@
 <%= link_to "Search", search_path %> < <%= link_to "#{@project.name}", project_path(@project) %> < <%= @ticket.number %> <%= @ticket.title %><br /><br />
 
-<h2>VARS</h2>
+<h2>PARAMS</h2>
 <table>
-  <%= @vars.map { |param, value| "<tr><td>" + param.to_s + "</td><td>" + value.to_s + " hours </td></tr>" } %>
+  <%= @params.map { |param, value| "<tr><td>" + param.to_s + "</td><td>" + value.to_s + " hours </td></tr>" } %>
 </table>
 
 <h2>Ticket</h2>
-
 <table>
   <%= @ticket.attributes.map { |param, value| "<tr><td>" + param.to_s + "</td><td>" + value.to_s + "</td></tr>" } %>
 </table>
+
+<h2>Ticket Attachments</h2>
+<% @ticket.attachments.each do |attachment| %>
+<h3>Attachment: <%= attachment.created_at %></h3>
+<table>
+  <%= attachment.attributes.map { |param, value| "<tr><td>" + param.to_s + "</td><td>" + value.to_s + "</td></tr>" } %>
+</table>
+<% end %>
 
 <br />
 <br />

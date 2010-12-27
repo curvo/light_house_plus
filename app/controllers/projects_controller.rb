@@ -1,11 +1,12 @@
 class ProjectsController < ApplicationController
 
   def show
+    @project = Project.find(params[:id])
+    
     if params[:restore_defaults] == "yes"
-      Project.add_default_bins(params[:id])
-      Project.restore_defaults(params[:id])
+      @project.add_default_bins(params[:id])
+      @project.restore_defaults(params[:id])
     end
-    @project = Lighthouse::Project.find(params[:id])
   end
 
 end

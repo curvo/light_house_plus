@@ -1,26 +1,6 @@
-class Project
- 
-  def self.all
-    cache_name = self.name.downcase + "_all"
-    this_class = Lighthouse.resources.select {|method| method.name.to_s =="Lighthouse::#{self.name}" }.first
-    all = Rails.cache.fetch(cache_name) do
-              this_class.find(:all)
-          end
-  end
-
-  def self.load(id)
-    all = self.all()
-    this = []
-    all.each do |project|
-      if id == project.id.to_s
-        this = project
-      end
-    end
-    this
-  end
-  
-  def self.restore_defaults(id)
-    project = self.load(id)
+class Project < Lighthouse::Project
+  def restore_defaults(id)
+    project = self
     project.public = false
     project.closed_states = 
 "complete/CCCCCC    # work complete, ticket closed
@@ -37,7 +17,7 @@ qa_ready/660000            # ready for qa, assigned to pm"
     project.save
   end
     
-  def self.add_default_bins(id)
+  def add_default_bins(id)
     bin_params = [
       { :name => "My Open Tickets",   :query => "responsible:me state:open",      :default => true },
       { :name => "New",               :query => "state:new",                      :default => false },
@@ -59,29 +39,5 @@ qa_ready/660000            # ready for qa, assigned to pm"
       bin.save
     end
   end    
-   
-  def self.memberships(id)
-    #get memberships
-    all = Rails.cache.read('project_' + id + '_memberships')
-    all_users = User.all
-    all_users_plus = []
-    # need to make copy of all_users to get unfrozen array (caching issue)
-    all_users_plus.replace(all_users) 
-    if all.to_s == ""
-      project = self.load(id)
-      all = project.memberships
-      Rails.cache.write('project_' + id + '_memberships', all)
-    end   
-    # parse and add new users
-    all.each do |membership|
-      if all_users_plus.index(membership.user).to_s.empty?
-        all_users_plus << membership.user
-      end
-    end
-    # store cache
-    unless all_users == all_users_plus
-      Rails.cache.write('users_all', all_users_plus)
-    end  
-    all
-  end
+  
 end
