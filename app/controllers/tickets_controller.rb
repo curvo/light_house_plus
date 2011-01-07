@@ -9,7 +9,7 @@ class TicketsController < ApplicationController
       # wants.html
       
       wants.json do
-        render :json => @ticket.params
+        render :text => "#{params[:callback]}(#{@ticket.params.to_json})"
       end
     end
   end
