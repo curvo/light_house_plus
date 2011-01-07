@@ -1,6 +1,12 @@
-api_keys = YAML::load(File.open("#{RAILS_ROOT}/config/api_keys.yml"))
-Lighthouse.account = api_keys["lighthouse"]["account"]
-Lighthouse.token = api_keys["lighthouse"]["token"]
+yml_file_path = "#{RAILS_ROOT}/config/api_keys.yml"
+if File.exists?(yml_file_path)
+  api_keys = YAML::load(File.open(yml_file_path))
+  Lighthouse.account = api_keys["lighthouse"]["account"]
+  Lighthouse.token = api_keys["lighthouse"]["token"]
+else 
+  Lighthouse.account = ENV["lighthouse_account"]
+  Lighthouse.token = ENV["lighthouse_token"]
+end
 
 class Lighthouse::Base
   class << self
